@@ -4,7 +4,7 @@ var button = document.querySelector("#searchBtn");
 var inputValue = document.querySelector("search-bar");
 var currentCard = document.querySelector("#currentCard");
 var forecastBox = document.querySelector("#forecast-box");
-
+var cityBox = document.querySelector("citySearch")
 
 
 function getLatLng(city) {
@@ -113,4 +113,9 @@ function getForecast(lat, lon) {
 button.addEventListener("click", function () {
   var city = document.querySelector(".search-bar").value;
   getLatLng(city);
+});
+// get help on key down event listener
+cityBox.addEventListener("keydown", function(){
+  var city = document.querySelector(".search-bar").value;
+  getLatLng(city); 
 });
