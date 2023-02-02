@@ -8,6 +8,7 @@ var cityBox = document.querySelector(".citySearch")
 var cityNames = JSON.parse(localStorage.getItem("cities")) || [];
 var savedCities = document.querySelector(".cityContainer")
 
+//find a way to get the lattitude and longitude for the city using the api//
 function getLatLng(city) {
   var geo =
     "http://api.openweathermap.org/geo/1.0/direct?q=" +
@@ -23,7 +24,7 @@ function getLatLng(city) {
       getCurrent(lat, lon);
     });
 }
-
+//using lat and lon pull the weather information from api//
 function getCurrent(lat, lon) {
   var forecast =
     "https://api.openweathermap.org/data/2.5/weather?lat=" +
@@ -37,6 +38,7 @@ function getCurrent(lat, lon) {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
+      //create card for the data to be displayed//
       var cardDiv = document.createElement("div");
       cardDiv.setAttribute("class", "card");
 
@@ -68,6 +70,8 @@ function getCurrent(lat, lon) {
   console.log(lat, lon);
   getForecast(lat, lon);
 }
+
+//use api to find the 5 day forecast//
 function getForecast(lat, lon) {
   console.log(lat, lon);
   var forecast =
@@ -82,13 +86,13 @@ function getForecast(lat, lon) {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      
+     //only need one hour selection to display, index through hours select 12pm to display// 
       for (var i = 0; i < data.list.length; i++) {
         var targetDate = data.list[i].dt_txt.split(" ")[1];
         if (targetDate === "12:00:00") {
           
           console.log(data.list[i]);
-
+      //create cards for the 5 days to display the data on//
           var cardDiv = document.createElement("div");
           cardDiv.setAttribute("class", "card");
 
@@ -120,6 +124,8 @@ function getForecast(lat, lon) {
       }
     });
 }
+
+//use local storage to display previous user searches from local history//
 function createButton(){
   savedCities.textContent= ""
   for (var i = 0; i < cityNames.length; i++){
@@ -141,7 +147,7 @@ button.addEventListener("click", function () {
   localStorage.setItem("cities", JSON.stringify(cityNames));
   createButton();
 });
-// get help on key down event listener
+// get help on key down event listener//
 cityBox.addEventListener("keyup", function(event){
   event.preventDefault();
   if (event.keyCode === 13) {
