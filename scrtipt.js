@@ -4,8 +4,9 @@ var button = document.querySelector("#searchBtn");
 var inputValue = document.querySelector("search-bar");
 var currentCard = document.querySelector("#currentCard");
 var forecastBox = document.querySelector("#forecast-box");
-var cityBox = document.querySelector("citySearch")
-
+var cityBox = document.querySelector(".citySearch")
+var cityNames = JSON.parse(localStorage.getItem("cities")) || [];
+var savedCities = document.querySelector(".cityContainer")
 
 function getLatLng(city) {
   var geo =
@@ -52,10 +53,15 @@ function getCurrent(lat, lon) {
       var windEl = document.createElement("p");
       windEl.textContent = "Wind: " + data.wind.speed + " mph ";
 
+      var iconEl = document.createElement("img");
+      iconEl.src = "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png"
+     
+
       cardDiv.appendChild(titleEl);
       cardDiv.appendChild(tempEl);
       cardDiv.appendChild(humidityEl);
       cardDiv.appendChild(windEl);
+      cardDiv.appendChild(iconEl);
 
       currentCard.appendChild(cardDiv);
     });
@@ -99,23 +105,52 @@ function getForecast(lat, lon) {
           var windEl = document.createElement("p");
           windEl.textContent = "Wind: " + data.list[i].wind.speed + " mph ";
 
+          var iconEl = document.createElement("img");
+      iconEl.src = "http://openweathermap.org/img/wn/" + data.list[i].weather[0].icon + "@2x.png"
+
           cardDiv.appendChild(titleEl);
           cardDiv.appendChild(tempEl);
           cardDiv.appendChild(humidityEl);
           cardDiv.appendChild(windEl);
+          cardDiv.appendChild(iconEl);
+
 
           forecastBox.appendChild(cardDiv);
         }
       }
     });
 }
+function createButton(){
+  savedCities.textContent= ""
+  for (var i = 0; i < cityNames.length; i++){
+    var cityBtn = document.createElement("button");
+    cityBtn.textContent = cityNames[i];
+  // add a class and style with css//
+  document.getElementById(cityBtn);
+    savedCities.appendChild(cityBtn);
+    document.getElementById("ctyBtn").setAttribute("class","cityBtn");
+  }
+  
+}
+
 
 button.addEventListener("click", function () {
   var city = document.querySelector(".search-bar").value;
   getLatLng(city);
+  cityNames.push(city);
+  localStorage.setItem("cities", JSON.stringify(cityNames));
+  createButton();
 });
 // get help on key down event listener
-cityBox.addEventListener("keydown", function(){
-  var city = document.querySelector(".search-bar").value;
-  getLatLng(city); 
+cityBox.addEventListener("keyup", function(event){
+  event.preventDefault();
+  if (event.keyCode === 13) {
+   var city = document.querySelector(".search-bar").value;
+    getLatLng(city);
+    cityNames.push(city);
+    localStorage.setItem("cities", JSON.stringify(cityNames));
+    createButton();
+}
+
 });
+createButton();
