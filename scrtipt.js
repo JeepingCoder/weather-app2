@@ -11,7 +11,7 @@ var savedCities = document.querySelector(".cityContainer")
 //find a way to get the lattitude and longitude for the city using the api//
 function getLatLng(city) {
   var geo =
-    "http://api.openweathermap.org/geo/1.0/direct?q=" +
+    "https://api.openweathermap.org/geo/1.0/direct?q=" +
     city +
     "&appid=be3a1c546ba346651be769db457cb1b7";
   fetch(geo)
@@ -147,7 +147,7 @@ button.addEventListener("click", function () {
   localStorage.setItem("cities", JSON.stringify(cityNames));
   createButton();
 });
-// get help on key down event listener//
+
 cityBox.addEventListener("keyup", function(event){
   event.preventDefault();
   if (event.keyCode === 13) {
