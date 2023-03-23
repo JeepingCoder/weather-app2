@@ -46,6 +46,9 @@ function getCurrent(lat, lon) {
       titleEl.setAttribute("class", "card-title");
       titleEl.textContent = data.name;
 
+      var currentEl = document.createElement("h3");
+      currentEl.textContent = "Current Weather";
+
       var tempEl = document.createElement("p");
       tempEl.textContent = "Temperature: " + data.main.temp + " °F ";
 
@@ -58,7 +61,7 @@ function getCurrent(lat, lon) {
       var iconEl = document.createElement("img");
       iconEl.src = "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png"
      
-
+      cardDiv.appendChild(currentEl);
       cardDiv.appendChild(titleEl);
       cardDiv.appendChild(tempEl);
       cardDiv.appendChild(humidityEl);
@@ -100,6 +103,9 @@ function getForecast(lat, lon) {
           titleEl.setAttribute("class", "card-title");
           titleEl.textContent = data.city.name;
 
+          var currentEl = document.createElement("h3");
+          currentEl.textContent = "Future Weather";
+
           var tempEl = document.createElement("p");
           tempEl.textContent = "Temperature: " + data.list[i].main.temp + " °F ";
 
@@ -110,8 +116,9 @@ function getForecast(lat, lon) {
           windEl.textContent = "Wind: " + data.list[i].wind.speed + " mph ";
 
           var iconEl = document.createElement("img");
-      iconEl.src = "http://openweathermap.org/img/wn/" + data.list[i].weather[0].icon + "@2x.png"
+          iconEl.src = "http://openweathermap.org/img/wn/" + data.list[i].weather[0].icon + "@2x.png"
 
+          cardDiv.appendChild(currentEl);
           cardDiv.appendChild(titleEl);
           cardDiv.appendChild(tempEl);
           cardDiv.appendChild(humidityEl);
@@ -146,6 +153,7 @@ button.addEventListener("click", function () {
   cityNames.push(city);
   localStorage.setItem("cities", JSON.stringify(cityNames));
   createButton();
+  
 });
 
 cityBox.addEventListener("keyup", function(event){
@@ -156,6 +164,7 @@ cityBox.addEventListener("keyup", function(event){
     cityNames.push(city);
     localStorage.setItem("cities", JSON.stringify(cityNames));
     createButton();
+  
 }
 
 });

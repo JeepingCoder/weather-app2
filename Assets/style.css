@@ -1,6 +1,4 @@
 body{
-   
-    
     height:100vh;
     margin:0;
     background:gray;
@@ -36,7 +34,8 @@ button{
     align-items: center;
     justify-content: center;
     }
-
-
+.card{
+    margin: 2rem;
+}
 
     
